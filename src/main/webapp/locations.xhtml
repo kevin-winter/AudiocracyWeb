@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/locationsTemplate.xhtml">
+    <ui:define name="title">Locations</ui:define>
+    <ui:define name="content">
+        <script type="text/javascript">
+            var hosts = #{locationController.locationsAsJS}
+        </script>
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true&amp;callback=initialize' type="text/javascript"></script>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{locationController.init(request)}"/>
+        </f:metadata>
+        <h:form id="form">
+            <h:panelGroup id="locationListSidebar" class="locationListSidebar" rendered="#{not empty locationController.items}">
+                <div id="hostList" class="hostList" style="overflow-x: hidden">
+                    <ul>
+                        <ui:repeat value="#{locationController.items}" var="loc">
+                            <li><p:commandLink actionListener="#{locationController.setSelected(loc)}" update="@form"><h:outputText value="#{loc.name}"/></p:commandLink></li>
+                        </ui:repeat>
+                    </ul>
+                </div> 
+                <div class="hostList" style="overflow-x: hidden">
+                    <ul>
+                        <ui:repeat value="#{offerController.futureOffers}" var="offer">
+                            <li><h:outputText style="color: #045491" value="#{locationController.getLocationByOfferId(offer.id).name} "/>
+                                <h:outputText style="font-size: smaller; color: #045491" value="#{offer.offerDate.toLocaleString().subSequence(0, offer.offerDate.toLocaleString().length()-9)}"/><br/>
+                                <p><h:outputText style="font-size: smaller" value="#{offer.content}"/></p></li><br/>
+                        </ui:repeat> 
+                    </ul>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup id="context" class="context" rendered="#{not empty locationController.selected.name}">
+                <div id="hostInfo">
+                    <h2 id="hiHead">#{locationController.selected.name}</h2>
+                    <p><h:outputText value="#{locationController.selected.description}"/></p>
+                    <p><h:outputText value="Hours: #{locationController.selected.hours}" rendered="#{not empty locationController.selected.hours}"/></p>
+                    <h3>Contact</h3>
+                    <p><h:outputText value="#{locationController.selected.street}"/><br/>
+                        <h:outputText value="#{locationController.selected.zipCode} "/>
+                        <h:outputText value="#{locationController.selected.city}"/></p>
+                    <p><h:outputText value="#{locationController.selected.tel}"/><br/>
+                        <a href="mailto:#"><h:outputText value="#{locationController.selected.email}"/></a><br/>
+                        <a href="#{locationController.selected.website}"><h:outputText value="#{locationController.selected.website}"/></a></p>
+                    <p:commandButton styleClass="buttonClear" type="button" onclick="PF('switcher').next();"
+                                     icon="ui-icon-circle-triangle-e" id="next"/>
+                    <p:commandButton styleClass="buttonClear" type="button" onclick="PF('switcher').previous();"
+                                     icon="ui-icon-circle-triangle-w" id="prev"/>
+                    <p:imageSwitch widgetVar="switcher" effect="fade" rendered="#{not empty locationController.selected.images}" style="opacity: 0.6">
+                        <ui:repeat value="#{locationController.selected.images}" var="image">
+                            <p:graphicImage value="/showImage?name=#{image.name}" alt="#{image.name}" title="#{image.name}" style="width: 100%"/>
+                        </ui:repeat>
+                    </p:imageSwitch>
+                    <p:commandButton id="submitLoc" style="display: none" update="form:context" value="update" actionListener="#{locationController.setSelected(locationController.getLocation(locationController.tempLocationID))}"/>
+                </div>
+            </h:panelGroup>
+
+            <p:fragment autoUpdate="true">
+                <h:inputHidden id="hidden" value="#{locationController.tempLocationID}"/>
+                <p:commandButton process="context" style="display: none;" id="submitID" value="Submit"/>
+            </p:fragment>
+        </h:form>
+        <div id="map"/>
+    </ui:define>
+</ui:composition>

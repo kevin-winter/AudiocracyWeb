@@ -1,0 +1,125 @@
+<ui:composition template="/WEB-INF/templates/withoutTopCut.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{bundle.YourLocations}
+    </ui:define>
+
+    <ui:define name="body">
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true&amp;callback=initialize' type="text/javascript"></script>
+
+        <h:form id="LocationListForm" acceptcharset="ISO-8859-1">
+            <h1 style="margin-top: 60px">#{bundle.ManageLocations}</h1>
+            <p:panel style="margin: 0px 50px 20px 50px">
+                <h2>#{bundle.YourLocations}</h2>
+                <p:dataTable id="datalist" value="#{customerController.selected.locations}" var="item"
+                             rowKey="#{item.id}" selection="#{locationController.selected}" emptyMessage="#{bundle.NoLocations}">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.Name}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.name}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.Street}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.street}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.City}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.city}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.Genres}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.genres}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.Tel}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.tel}"/>
+                    </p:column>
+                    <p:column width="20%">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.Email}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.Edit}" width="8%">
+                        <div align="center">
+                            <p:commandButton type="submit"  icon="ui-icon-pencil" styleClass="ourButton" alt="#{bundle.Edit}" ajax="false" update=":LocationForm:display"
+                                             action="#{locationController.setEditLocation(item)}"/>
+                        </div>
+                    </p:column>  
+                    <p:column headerText="#{bundle.Delete}"  width="8%">
+                        <div align="center"><p:commandButton type="submit"  update="@form" icon="ui-icon-trash" styleClass="cancelButton" alt="#{bundle.Delete}" ajax="false"
+                                                             actionListener="#{customerController.deleteLocation(item)}"/></div>
+                    </p:column>  
+                </p:dataTable>
+                <br></br>
+            </p:panel>
+        </h:form>
+        <h:form id="LocationForm" enctype="multipart/form-data" style="display: block" acceptcharset="ISO-8859-1">
+            <p:panel style="margin: 0px 50px 0px 50px">
+                <h:panelGroup id="display">
+                    <h2>#{bundle.AddLocation}</h2>
+                    <div class="row">
+                        <div style="float: left">
+                            <p:inputText id="name" value="#{locationController.selected.name}" placeholder="#{bundle.Name}" 
+                                         required="true" requiredMessage="#{bundle.Name} #{bundle.required}" styleClass="locationInput"/><br/>         
+                            <p:inputText id="street" value="#{locationController.selected.street}" placeholder="#{bundle.Street}" required="true" requiredMessage="#{bundle.Street} #{bundle.required}" styleClass="locationInput" onblur="codeAddress()"/><br/>
+                            <p:inputText id="zipCode" widgetVar="yourlink" value="#{locationController.selected.zipCode}" 
+                                         placeholder="#{bundle.ZipCode}" required="true" requiredMessage="#{bundle.ZipCode} #{bundle.required}"  styleClass="locationInput" onblur="codeAddress()"/>   <br/>
+                        </div>
+                        <div style="float: left">
+                            <p:inputText id="city" value="#{locationController.selected.city}" placeholder="#{bundle.City}" required="true" 
+                                         requiredMessage="#{bundle.City} #{bundle.required}" styleClass="locationInput" onblur="codeAddress()"/>  <br/> 
+                            <p:inputText id="genres" value="#{locationController.selected.genres}" placeholder="#{bundle.Genres}" requiredMessage="#{bundle.Genres} #{bundle.required}" styleClass="locationInput"/>    <br/>
+                            <p:inputText id="tel" value="#{locationController.selected.tel}" placeholder="#{bundle.Tel}" styleClass="locationInput" />   <br/>
+                        </div>
+                        <div style="float: left">
+                            <p:inputText id="email" value="#{locationController.selected.email}" placeholder="#{bundle.Email}" styleClass="locationInput" />                     <br/>
+                            <p:inputText id="website" value="#{locationController.selected.website}" placeholder="#{bundle.Website}" styleClass="locationInput" />        <br/>
+                            <p:inputText id="hours" value="#{locationController.selected.hours}" placeholder="#{bundle.Hours}" styleClass="locationInput" /><br/>
+                        </div>
+                        <div style="float: left">
+                            <p:inputTextarea rows="4" cols="30" id="description" value="#{locationController.selected.description}" placeholder="#{bundle.Description}" styleClass="locationInput"/>      
+                        </div>
+                        <div id="map" style="width:300px;height:123px; display: inline"></div>
+                    </div>
+                    <h:inputHidden id="lat" value="#{locationController.selected.lat}"/>
+                    <h:inputHidden id="lng" value="#{locationController.selected.lng}"/>
+                </h:panelGroup>
+
+                <br/><br/><h2>#{bundle.UploadImages}</h2>
+                <h:panelGroup id="imagePreview" >
+                    <p:carousel value="#{locationController.selected.images}"
+                                rendered="#{not empty locationController.selected.images}"
+                                var="image" itemStyle="width:80px; height: 80px" 
+                                numVisible="10">
+                        <p:graphicImage value="/showThumbnail?name=#{image.name}" alt="#{image.name}" title="#{image.name}"/>
+                    </p:carousel>
+                </h:panelGroup>
+                <p:fileUpload id="fileUpload" fileUploadListener="#{locationController.handleFileUpload}"
+                              multiple="true" auto="true" label="#{bundle.Choose}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                              fileLimit="5" fileLimitMessage="ImageToBig" sizeLimit="1000000" update=":growl, imagePreview"/>
+
+                <p:commandButton actionListener="#{locationController.create}" 
+                                 value="#{bundle.AddLocation}" 
+                                 ajax="false"
+                                 styleClass="btn ourButton"
+                                 style="margin-top: 20px"/>
+            </p:panel><br/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

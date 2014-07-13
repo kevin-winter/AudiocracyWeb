@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+    <cc:interface>
+        <cc:attribute name="locales" required="true" />
+    </cc:interface>
+
+    <cc:implementation>
+        <div id="languageSelector">
+            <h:form id="languageSelectorForm">
+                <div class="flags">
+                    <c:forEach items="#{cc.attrs.locales}" var="loc" >
+                        <h:commandLink id="language_link_#{loc}" 
+                                       title="#{loc}" 
+                                       actionListener="#{languageSelectorBean.changeLocale(loc)}" 
+                                       styleClass="flag flag-#{loc}"/>
+                    </c:forEach>
+                    <div style="clear: both;"> </div>
+                </div>
+            </h:form> 
+        </div> 
+    </cc:implementation>
+</html>

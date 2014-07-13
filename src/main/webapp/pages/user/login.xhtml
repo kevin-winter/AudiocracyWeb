@@ -1,0 +1,38 @@
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{bundle.Login}
+    </ui:define>
+
+    <ui:define name="content">
+        <div style="margin-top: 60px; margin-left: 20px">
+            <div style="font-family: 'Raleway', sans-serif; font-size:30pt; padding-bottom: 20px">
+                #{bundle.SignInPlease}</div>
+            <h:form id="login_Page">
+
+                <p:inputText   id="username_loginPage" value="#{username}" placeholder="#{bundle.Email}" 
+                               styleClass="form-control" style="width: 210px; height: 35px; margin-bottom: 5px "/>
+
+                <p:password   id="password_loginPage" value="#{password}"  placeholder="#{bundle.Password}" 
+                              styleClass="form-control" style="width: 210px; height: 35px; margin-bottom: 10px "/>
+
+                <p:commandButton  styleClass="btn btn-primary ourButton" style="width: 210px"
+                                  actionListener="#{login.login(request, username, password)}"
+                                  action="index"
+                                  ajax="false"
+                                  value="#{bundle.Login}"
+                                  />
+                <p>#{bundle.NewToAudiocracy}
+                    <h:commandLink value="#{bundle.SignUp}" 
+                                   actionListener="#{customerController.prepareRegistration()}" 
+                                   action="register" /></p>
+            </h:form> 
+        </div>
+    </ui:define>
+</ui:composition>
+

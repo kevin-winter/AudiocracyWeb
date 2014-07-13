@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/WEB-INF/templates/withoutTopCut.xhtml">
+
+    <ui:define name="title">
+        #{bundle.LegalInformation}
+    </ui:define>
+
+    <ui:define name="body">
+        <p:panel>
+            <h2>#{bundle.LegalInformation}</h2>
+            <p>#{bundle.Owner}:</p>
+            <p>Clemens Paumgarten</p>
+            <p>Josef Rosel</p>
+            <p>Fabian Schmiedlechner</p>
+            <p>Kevin Winter</p>   
+            <br></br>
+            <p>Informationsmanagement - FH Joanneum Graz</p>
+        </p:panel>
+
+    </ui:define>
+</ui:composition>
+</html>

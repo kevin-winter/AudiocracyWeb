@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/master.xhtml">
+    <ui:define name="scripts">
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+        <script type="text/javascript" src="js/libs/jquery-easing/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="js/libs/stellar.js/jquery.stellar.min.js"></script>
+        <script type="text/javascript" src="js/libs/waypoints/waypoints.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+    </ui:define>
+
+    <ui:define name="homeLink">
+        <li class="header navlink"  stelldata-slide='1'><a id="headerText" href="#home">
+                <img src="./img/logo.png" width="30px" style="margin-top: -6px;"/>
+                Audiocracy</a> </li>
+    </ui:define>
+
+    <ui:define name="navRight">
+        <li class="pull-right navlink"  stelldata-slide='3'><a class="navtab" href="#hosts">Hosts</a></li>
+        <li class="pull-right navlink"  stelldata-slide='2'><a class="navtab" href="#download">Download</a></li>     
+    </ui:define>
+
+    <ui:define name="content">
+        <div>
+            <div>
+                <div class="container">
+                    <div class="row cSlide" stelldata-slide="1" id="home">
+                        <div class="col-md-4">
+                            <img alt="Logo" src="./img/logo.png" class="mainimg"/>
+                        </div>
+                        <div class="col-md-6">
+                            <h1 id="homeText">#{bundle.AppName}</h1>
+                            <h2 >#{bundle.ShortAudiocracy}</h2>
+
+                            <p class="description">#{bundle.HomeText}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bgSlide" id="bg1" data-stellar-background-ratio="0.3"></div>
+            <div id="download" style="height: 10px"/>
+            <div class="cSlide" stelldata-slide="2">
+                <h1>Download</h1>
+                <div class="container">
+                    <div class="col-md-5">
+                        <h2>Server</h2>
+                        <p>#{bundle.DownloadTextPC}</p>
+                        <div>
+                            <p:graphicImage value="/resources/img/audioCracyServer.png" 
+                                            style="height: 300px; float: left"/>
+                            <div style="float: right; margin-top: 90px">
+                                <a href="resources/img/AudiocracyServer_web.rar" download="AudiocracyServer.rar">
+                                    <button type="submit" class="btn ourButton" style="padding: 17px 30px 17px 30px!important">Download</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-md-offset-1">
+                        <h2>Android</h2>
+                        <p>#{bundle.DownloadTextAndroid}</p>
+                        <p:graphicImage value="/resources/img/nexus_5_tilt.png" style="height: 300px; float: right"/>
+                        <a href="http://play.google.com">
+                            <p:graphicImage value="/resources/img/gPlay.png" style="margin-top: 90px"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bgSlide" id="bg2" data-stellar-background-ratio="0.3"></div>
+            <div id="hosts" style="height: 10px"/>
+            <div class="cSlide" stelldata-slide="3">
+                <h1>Hosts</h1>
+                <p class="slideP">#{bundle.HostsText}</p>
+                <br/>
+
+            </div>
+
+            <div class="bgSlide" id="bg3" data-stellar-background-ratio="0.3"></div>
+        </div>
+    </ui:define>
+</ui:composition>

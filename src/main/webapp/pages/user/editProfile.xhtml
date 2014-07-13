@@ -1,0 +1,66 @@
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="top">
+        <h1>#{bundle.YourProfile}</h1>
+    </ui:define>
+
+    <ui:define name="content">
+        <f:event type="preRenderView" listener="#{customerController.initCurrentUser()}"/>
+        <!--        <div class="row">
+                    <div align="center">-->
+        <!--<div style="font-family: 'Raleway', sans-serif; font-size:30pt;padding-bottom">-->
+
+        <!--</div>-->
+        <!--<div align="center">-->
+        <h:form id="CustomerCreateForm" acceptcharset="ISO-8859-1">
+            <div  class="col-md-2 col-md-offset-5">
+                <h:panelGroup id="display">
+                    <h2 style="margin-top: 50px">#{bundle.YourProfile}</h2>
+                    <p:outputLabel id="email" value="#{customerController.selected.email}" 
+                                 title="#{bundle.Email}"/><br/><br/>
+                    <p:inputText id="firstname" value="#{customerController.selected.firstname}" 
+                                 title="#{bundle.Firstname}" 
+                                 placeholder="#{bundle.Firstname}" style="width: 100%"/><br/><br/>
+                    <p:inputText id="lastname" value="#{customerController.selected.lastname}" 
+                                 title="#{bundle.Lastname}" 
+                                 placeholder="#{bundle.Lastname}" style="width: 100%"/><br/><br/>
+                    <p:inputText id="street" value="#{customerController.selected.street}" 
+                                 title="#{bundle.Street}" 
+                                 placeholder="#{bundle.Street}" style="width: 100%"/><br/><br/>
+                    <p:inputText id="zipCode" value="#{customerController.selected.zipCode}" 
+                                 title="#{bundle.ZipCode}" 
+                                 placeholder="#{bundle.ZipCode}" style="width: 40%" styleClass="editProfileInput"/>
+                    <p:inputText id="city" value="#{customerController.selected.city}" 
+                                 title="#{bundle.City}" 
+                                 placeholder="#{bundle.City}" style="width: 60%"/><br/><br/>
+                    <p:inputText id="country" value="#{customerController.selected.country}" 
+                                 title="#{bundle.Country}" 
+                                 placeholder="#{bundle.Country}" style="width: 100%"/><br/><br/>
+                    <p:inputText id="tel" value="#{customerController.selected.tel}" 
+                                 title="#{bundle.Tel}" 
+                                 placeholder="#{bundle.Tel}" style="width: 100%"/><br/><br/>
+                    <p:commandButton action="#{customerController.update()}" 
+                                     update="display,:growl"
+                                     value="#{bundle.Save}"
+                                     ajax="false"
+                                     styleClass="btn-block btn ourButton"/>
+                    <a class="btn btn-danger btn-block" href="../../index.xhtml">#{bundle.Cancel}</a>
+                </h:panelGroup>
+            </div>
+        </h:form>
+
+        <!--</div>-->
+
+    </ui:define>
+
+
+
+
+</ui:composition>
+

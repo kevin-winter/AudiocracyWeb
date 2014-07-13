@@ -1,0 +1,317 @@
+h1, h2, h3,h4,h5,h6 #headerText, a, button, span{
+    font-family: 'Raleway', sans-serif !important;
+}
+
+h2 {
+    margin-top: 0px;
+}
+
+p {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: medium;
+    font-weight: 200;
+}
+
+.navigation{
+    padding: 0;
+    margin: 0;
+    background: rgba(255, 255, 255, .9);
+    position: fixed;
+    float: right !important;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 50px;
+    min-width: 425px!important;
+}
+
+.bgSlide{
+    background-attachment: fixed;
+    width: 100%;
+    height: 400px;
+    position: relative;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.registerInput {
+    width: 100%;
+}
+
+.ui-growl {
+right: 20px;
+top: 60px;
+}
+
+.editProfileInput {
+    width: 100%;
+}
+
+form .pfButton {
+    background-image: #045491;
+    
+}
+
+.cSlide{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: transparent;
+    margin-bottom: 30px;
+}
+
+.mainimg {
+    display: block;
+    margin: 80px auto;
+    width: 200px;
+    height: 200px;
+}
+#homeText{
+    font-size: 50pt;
+    padding-top: 6%;
+    padding-bottom: 20px;
+}
+
+.loginInput{
+    padding-bottom: 20px
+}
+
+.description{
+    margin: 0px 0px 0px 0px;
+    padding-top: 0px!important;
+}
+
+.slideP, h1 {margin: 35px 50px 20px 50px}
+
+.header {
+    font-size: x-large; //navbar Audiocracy
+    padding: 7px 7px;
+    height: 50px;
+}
+
+.nav-tabs > li.active > #headerText,
+.nav-tabs > li > #headerText:hover {
+    border-color: transparent!important;
+    background-color: transparent;
+}
+
+ul.nav a:hover{
+    background-color: rgba(255,255,255,.7);
+}
+#bg1{background-image: url(../resources/img/Headphones.jpg);}
+#bg2{background-image: url(../resources/img/dance.jpg);}
+#bg3{background-image: url(../resources/img/jukebox.jpg);}
+
+#map{
+    height: 100%; 
+    width: 100%;
+    position: absolute;
+}
+
+#home{
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.loginPage{
+    text-align: center;
+}
+
+.navtab{
+    height: 40px!important;
+    text-align: center;
+    padding: 5px 10px 0 10px!important;
+    margin-top: 10px;
+}
+
+.hostList {
+    width: 100%; 
+    top: 0; 
+    bottom: 70%; 
+    //position: absolute; 
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.hostList ul { 
+    padding: 20px; 
+    list-style: none; 
+}
+.hostList ul li a { 
+    //font-family: 'Roboto', sans-serif!important;
+    font-size: 14pt;
+    display:block; 
+    text-decoration:none; 
+    color:#000000; 
+    background-color:rgba(255,255,255,0); 
+    line-height:30px;
+    border-bottom-style:solid; 
+    border-bottom-width:1px; 
+    border-bottom-color:#CCCCCC; 
+    padding-left:10px; 
+    cursor:pointer; 
+}
+.hostList ul li a:hover { color:#3399CC;}
+.hostList ul li a strong { margin-right:10px; }
+
+#hostInfo > h2,
+#hostInfo > h3,
+#hostInfo > h1,
+#hostInfo > h4,
+#hostInfo > h5,
+#hostInfo > h6 {
+    margin: 20px;
+}
+
+#hostInfo > p {
+    margin-left: 20px;
+}
+#hostInfo > button {
+    background: none!important;
+}
+
+th {
+    background-image: none!important;
+    background-color: whitesmoke!important;
+    border-radius: 0px!important;
+    text-shadow: none!important;
+    /*font-weight: lighter;*/
+}
+
+#hostInfo{
+    width: 100%;
+    top: 50px; 
+    bottom: 0; 
+    position: absolute;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+
+.dropdownBox {
+    width: auto;
+    padding: 15px 30px 5px 30px;
+
+}
+
+.locationInput {
+    margin: 5px;
+}
+
+/*Footer specific settings*/
+
+#footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:60px;   /* Height of the footer */
+}
+
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
+#outerDiv {
+    min-height:100%;
+    position:relative;
+}
+
+.ui-carousel .ui-carousel-header {
+    height: 3em !important
+}
+
+.ourButton, .ui-button {
+    background-color : #3276b1!important;
+    background-image : none!important;
+    text-shadow: none!important;
+    color: white!important;
+    border-width: 1px!important;
+    border-color: #265a87!important;
+    box-shadow: none!important;
+    padding: 0px 0px 0px 0px!important;
+    font-weight: normal;
+}
+
+.ui-icon
+{
+    background-image: url(../img/ui-icons_EEEEEE_256x240.png)!important;
+}
+
+.ourButton:hover,
+.ourButton:focus,
+.ourButton:active,
+.ourButton.active {
+  color: #ffffff;
+  background-color: #045491!important;
+  background-image: none!important;
+}
+
+.cancelButton {
+    background-color : #d9534f!important;
+    background-image : none!important;
+    text-shadow: none!important;
+    color: white!important;
+    border-width: 1px!important;
+    border-color: #ca4d4a!important;
+    box-shadow: none!important;
+    padding: 0px 0px 0px 0px!important;
+}
+
+.cancelButton:hover,
+.cancelButton:focus,
+.cancelButton:active,
+.cancelButton.active {
+  color: #ffffff;
+  border-color: #bc2d28!important;
+  background-color: #d2322d!important;
+  background-image: none!important;
+}
+
+.ui-galleria {
+    width: inherit!important;
+    height: 200px!important;
+    border: none;
+    background: none;
+}
+
+.context {
+     z-index: 800;
+     background-size: cover; 
+     background: rgba(255,255,255,.85); 
+     position: absolute; 
+     width: 30%; 
+     height: 100%; 
+     left: 70%;
+}
+
+.locationListSidebar {
+    width: 20%; 
+    position: absolute;
+    bottom: 0px; 
+    top: 50px; 
+    overflow-x: hidden; 
+    z-index: 800; 
+    background-size: cover; 
+    background: rgba(255,255,255,0.7);
+}
+
+.buttonClear{
+    background-image: none;
+    background: none;
+    border: none;
+    float: right;
+    z-index: 999;
+}
+
+.dropdown-menu > form > a, .dropdown-menu > a{
+    border: none!important;
+}
+
+.dropdown-menu > form > a:hover, .dropdown-menu > a:hover {
+    background: whitesmoke!important;
+}

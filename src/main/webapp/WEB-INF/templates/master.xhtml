@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:lu="http://xmlns.jcp.org/jsf/composite/components/languageUtils">
+    <f:view locale="#{languageSelectorBean.locale}">
+        <h:head>
+            <title>
+                <ui:insert name="title">#{bundle.AppName}</ui:insert>
+            </title>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <ui:insert name="scripts"></ui:insert>
+            <script type="text/javascript" src="/js/libs/jquery/jquery.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/js/gmaps.js"></script>
+            <script src="#{request.contextPath}/js/libs/twitter-bootstrap/js/bootstrap.js"></script>
+            <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/img/favicon.ico"/>
+            <link rel="stylesheet" href="#{request.contextPath}/js/libs/twitter-bootstrap/css/bootstrap.css"/>
+            <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/style.css"/>
+            <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'/>
+            <link href="//fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet" type="text/css"/>
+            <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true&amp;callback=initialize' type="text/javascript"></script>
+            <link rel="stylesheet" href="#{request.contextPath}/resources/components/languageUtils/style.css"/>
+        </h:head>
+
+        <h:body onload="loadAdressData()">
+            <script type="text/javascript">
+                function loadAdressData() {
+                    var url = window.location.pathname;
+                    var filename = url.substring(url.lastIndexOf('/')+1);
+                    if (filename == "editLocation.xhtml") {
+                        codeAddress();
+                    }
+                }
+            </script>
+            <p:growl id="growl" life="3000" />
+            <div id="outerDiv">
+                <div id="navbar" class="nav">
+                    <nav id="navBar">
+                        <ul class='nav nav-tabs navigation'>
+                            <ui:insert name="homeLink">
+                                <li class="header">
+                                    <a id="headerText" href="/AudiocracyWeb/faces/index.xhtml#home">
+                                        <img src="#{request.contextPath}/img/logo.png" 
+                                             width="30px" 
+                                             style="margin-top: -6px;"/>
+                                        #{bundle.AppName}
+                                    </a> 
+                                </li>
+                            </ui:insert> 
+                            <h:panelGroup rendered="#{empty request.remoteUser}" layout="block"> 
+                                <li class="pull-right dropdown"><a class="navtab dropdown-toggle" data-toggle="dropdown" href="#" ><img src="#{request.contextPath}/img/account.png" width="15px"/>#{bundle.SignIn}</a>
+                                    <ul class="dropdown-menu dropdownBox">
+                                        <h:form id="login">
+
+                                            <p:inputText   id="theusername" value="#{username}" placeholder="#{bundle.Email}" styleClass="form-control" style="width: 210px; height: 35px; margin-bottom: 5px "/>
+
+                                            <p:password   id="thepassword" value="#{password}"  placeholder="#{bundle.Password}" styleClass="form-control" style="width: 210px; height: 35px; margin-bottom: 10px "/>
+                                            <p:commandButton styleClass="btn btn-block ourButton" ajax="false"
+                                                             action="#{login.login(request, username, password)}"  value="Sign in"/>
+                                            <p style="margin-top: 5px">#{bundle.NewToAudiocracy}
+                                                <h:commandLink value="#{bundle.SignUp}" 
+                                                               actionListener="#{customerController.prepareRegistration()}" 
+                                                               action="register" /></p>
+                                        </h:form>
+                                    </ul></li>
+                            </h:panelGroup>
+                            <h:panelGroup  rendered="#{not empty request.remoteUser}" layout="block"> 
+                                <li class="pull-right dropdown"><a class="navtab dropdown-toggle" data-toggle="dropdown" href="#" >
+                                        #{request.remoteUser}</a>
+                                    <ul class="dropdown-menu">
+                                        <h:form id="dropDown" style="width: 200px" >
+                                            <a class="list-group-item" href="/AudiocracyWeb/faces/pages/user/editProfile.xhtml">#{bundle.EditProfile}</a>
+                                            <h:commandLink id="createButton" 
+                                                           class="list-group-item" 
+                                                           action="manageLocation"
+                                                           actionListener="#{locationController.prepareCreate()}">#{bundle.ManageLocations}</h:commandLink>
+                                            <h:commandLink class="list-group-item" action="#{login.signOut(request)}">#{bundle.SignOut}</h:commandLink>
+                                        </h:form>
+                                    </ul></li>
+                            </h:panelGroup>
+                            <h:panelGroup  rendered="#{request.isUserInRole('ADMIN')}" layout="block"> 
+                                <li class="pull-right dropdown"><a class="navtab dropdown-toggle" data-toggle="dropdown" href="#" >Maintenance</a>
+                                    <ul class="dropdown-menu">
+                                        <h:link class="list-group-item" outcome="/pages/customer/List" value="#{bundle.Customer} #{bundle.Maintenance}"/>
+                                        <h:link class="list-group-item" outcome="/pages/location/List" value="#{bundle.Location} #{bundle.Maintenance}"/>
+                                        <h:link class="list-group-item" outcome="/pages/offer/List" value="#{bundle.Offer} #{bundle.Maintenance}"/>
+                                    </ul></li>
+                            </h:panelGroup>
+                            <li class="pull-right"><a class="navtab" href="/AudiocracyWeb/faces/locations.xhtml">#{bundle.Locations}</a></li>
+                            <ui:insert name="navRight">
+                                <li class="pull-right navlink"><a class="navtab" href="/AudiocracyWeb/faces/index.xhtml#hosts">#{bundle.Hosts}</a></li>
+                                <li class="pull-right navlink"><a class="navtab" href="/AudiocracyWeb/faces/index.xhtml#download">#{bundle.Download}</a></li>  
+                            </ui:insert>
+                        </ul>
+                    </nav>
+                </div>
+                <div id="content" class="center_content" style="padding-bottom:60px;">
+                    <ui:insert name="content">Content</ui:insert>
+                </div>
+                <ui:insert name="footer">
+                    <div id="footer" style="padding: 20px">
+                        <a href="#{request.contextPath}/faces/pages/user/Legal.xhtml">
+                            #{bundle.LegalInformation}
+                        </a>
+                        <lu:selector locales="#{languageSelectorBean.supportedLocales}"/>
+                    </div>
+                </ui:insert>
+            </div>
+        </h:body>
+    </f:view>
+</html>

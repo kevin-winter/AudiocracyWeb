@@ -1,0 +1,22 @@
+Projectname: 
+Audiocracy
+
+Teammembers:
+Paumgarten Clemens
+Rosel Josef
+Schmiedlechner Fabian
+Winter Kevin
+
+Workload Distribution:
+Pages:
+    Homepage: Winter, Schmiedlechner
+    Locations: Winter, Schmiedlechner
+    Manage & Add Locations: Rosel, Paumgarten
+
+Functions & Features:
+    Database: Rosel, Schmiedlechner, Paumgarten, Winter
+    Login: Paumgarten
+    Roles: Paumgarten, Rosel
+    Multilanguage: Winter, Rosel
+    Geocoder: Winter, Schmiedlechner
+    Maps & Gelocation: Winter

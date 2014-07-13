@@ -1,0 +1,59 @@
+<ui:composition template="/WEB-INF/templates/master.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{bundle.Register}
+    </ui:define>
+
+    <ui:define name="content">
+        <div style="margin-top: 60px">
+            <div class="col-md-2 col-md-offset-4">
+                <div>
+                    <div style="font-family: 'Raleway', sans-serif; font-size:30pt; padding-bottom: 20px">
+                        #{bundle.Register}</div>
+                    <h:form id="CustomerCreateForm">
+                        <h:panelGroup id="display">
+                            <p:inputText id="email" value="#{customerController.selected.email}" styleClass="registerInput"
+                                         placeholder="#{bundle.Email}" 
+                                         title="#{bundle.Email}" required="true" 
+                                         requiredMessage="#{bundle.Email} #{bundle.required}"/><br/><br/>
+                            <p:inputText id="firstname" value="#{customerController.selected.firstname}"  styleClass="registerInput"
+                                         placeholder="#{bundle.Firstname}" 
+                                         title="#{bundle.Firstname}" required="true" 
+                                         requiredMessage="#{bundle.Firstname} #{bundle.required}"/><br/><br/>
+                            <p:inputText id="lastname" value="#{customerController.selected.lastname}"  styleClass="registerInput"
+                                         placeholder="#{bundle.Lastname}" 
+                                         title="#{bundle.Lastname}" required="true" 
+                                         requiredMessage="#{bundle.Lastname} #{bundle.required}"/><br/><br/>                   
+
+                            <h:panelGroup>                                
+                                <p:password id="password" match="password2" feedback="true"  styleClass="registerInput"
+                                            label="Password" 
+                                            value="#{customerController.selected.password}" 
+                                            placeholder="#{bundle.Password}"/>
+                                <p:message for="password"/><br/>
+
+                                <p:password id="password2"  label="#{bundle.RetypePassword}"  styleClass="registerInput"
+                                            placeholder="#{bundle.RetypePassword}"/>
+                                <p:message for="password2"/>
+                            </h:panelGroup>
+                            <div style="padding-top: 15px">
+                                <p:commandButton actionListener="#{customerController.create()}" styleClass="btn-block btn ourButton"
+                                                 action="index"
+                                                 update="display,:growl"
+                                                 value="#{bundle.Save}"/>
+                                <p:button styleClass="btn cancelButton btn-block"
+                                          value="#{bundle.Cancel}" outcome="index"/>
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </div>
+            </div>
+            <p:graphicImage value="/resources/img/jukeIcon.jpg" height="350em"/>
+        </div>
+    </ui:define>
+</ui:composition>

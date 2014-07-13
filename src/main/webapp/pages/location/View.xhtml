@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LocationViewDlg" widgetVar="LocationViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.Location}">
+            <h:form id="LocationViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{locationController.selected != null}">
+                        <h:outputText value="#{bundle.Name}"/>
+                        <h:outputText value="#{locationController.selected.name}" title="#{bundle.Name}"/>                        
+                        <h:outputText value="#{bundle.Genres}"/>
+                        <h:outputText value="#{locationController.selected.genres}" title="#{bundle.Genres}"/>
+                        <h:outputText value="#{bundle.Street}"/>
+                        <h:outputText value="#{locationController.selected.street}" title="#{bundle.Street}"/>
+                        <h:outputText value="#{bundle.ZipCode}"/>
+                        <h:outputText value="#{locationController.selected.zipCode}" title="#{bundle.ZipCode}"/>
+                        <h:outputText value="#{bundle.City}"/>
+                        <h:outputText value="#{locationController.selected.city}" title="#{bundle.City}"/>
+                        <h:outputText value="#{bundle.Tel}"/>
+                        <h:outputText value="#{locationController.selected.tel}" title="#{bundle.Tel}"/>
+                        <h:outputText value="#{bundle.Email}"/>
+                        <h:outputText value="#{locationController.selected.email}" title="#{bundle.Email}"/>
+                        <h:outputText value="#{bundle.Website}"/>
+                        <h:outputText value="#{locationController.selected.website}" title="#{bundle.Website}"/>
+                        <h:outputText value="#{bundle.Hours}"/>
+                        <h:outputText value="#{locationController.selected.hours}" title="#{bundle.Hours}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="LocationViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

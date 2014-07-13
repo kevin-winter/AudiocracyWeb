@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/WEB-INF/templates/withoutTopCut.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.Offer} #{bundle.Maintenance}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="OfferListForm" acceptcharset="ISO-8859-1">
+                <p:panel style="width: 50%; margin-left: 20px">
+                    <h2>#{bundle.Offer} #{bundle.Maintenance}</h2>
+                    <p:dataTable id="datalist" value="#{offerController.items}" var="item"
+                                 selectionMode="single" selection="#{offerController.selected}"
+                                 rowKey="#{item.id}">  
+
+                        <p:ajax event="rowSelect"   update="deleteButton"/>
+                        <p:ajax event="rowUnselect" update="deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.AvailableUntil}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.offerDate}">
+                                <f:convertDateTime pattern="dd MMM YYYY"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.OfferText}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.content}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{offerController.destroy}" update=":growl,datalist" disabled="#{empty offerController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

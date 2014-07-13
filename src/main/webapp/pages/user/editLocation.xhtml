@@ -1,0 +1,114 @@
+<ui:composition template="/WEB-INF/templates/withoutTopCut.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{bundle.EditProfile}
+    </ui:define>
+
+    <ui:define name="body">
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=true&amp;callback=initialize' type="text/javascript"></script>
+        <h:form  id="LocationForm" enctype="multipart/form-data" acceptcharset="ISO-8859-1">
+            <h1 style="margin-top: 60px" >#{bundle.EditLocation}</h1>
+            <p:panel style="margin-left: 50px; margin-right: 50px">
+                <h:panelGroup id="display">
+                    <h2>#{bundle.Information}</h2>
+                    <div class="row" style="margin-bottom: 30px">
+                        <div style="float: left">
+                            <p:inputText id="name" value="#{locationController.selected.name}" placeholder="#{bundle.Name}" required="true" requiredMessage="#{bundle.N} #{bundle.required}" styleClass="locationInput"/><br/>         
+                            <p:inputText id="zipCode" value="#{locationController.selected.zipCode}" placeholder="#{bundle.ZipCode}" required="true" requiredMessage="#{bundle.ZipCode} #{bundle.required}"  styleClass="locationInput"/>   <br/>
+                            <p:inputText id="city" value="#{locationController.selected.city}" placeholder="#{bundle.City}" required="true" requiredMessage="#{bundle.City} #{bundle.required}" styleClass="locationInput"/>  <br/> 
+                        </div>
+                        <div style="float: left">
+                            <p:inputText id="street" value="#{locationController.selected.street}" placeholder="#{bundle.Street}" required="true" requiredMessage="#{bundle.Street} #{bundle.required}" styleClass="locationInput" onchange="codeAddress()"/><br/>
+                            <p:inputText id="genres" value="#{locationController.selected.genres}" placeholder="#{bundle.Genres}" required="true" requiredMessage="#{bundle.Genres} #{bundle.required}" styleClass="locationInput"/>    <br/>
+                            <p:inputText id="tel" value="#{locationController.selected.tel}" placeholder="#{bundle.Tel}" styleClass="locationInput" />   <br/>
+                        </div>
+                        <div style="float: left">
+                            <p:inputText id="email" value="#{locationController.selected.email}" placeholder="#{bundle.Email}" styleClass="locationInput" />                     <br/>
+                            <p:inputText id="website" value="#{locationController.selected.website}" placeholder="#{bundle.Website}" styleClass="locationInput" />        <br/>
+                            <p:inputText id="hours" value="#{locationController.selected.hours}" placeholder="#{bundle.Hours}" styleClass="locationInput" /><br/>
+                        </div>
+                        <div style="float: left">
+                            <p:inputTextarea rows="4" cols="30" id="description" value="#{locationController.selected.description}" placeholder="#{bundle.Description}" styleClass="locationInput"/>      
+                        </div>
+                        <div id="map" style="width:300px;height:123px; display: inline"></div>
+                    </div>
+                    <div style="float: right">
+                        <h:inputHidden id="lat" value="#{locationController.selected.lat}"/>
+                        <h:inputHidden id="lng" value="#{locationController.selected.lng}"/>
+                    </div>
+                </h:panelGroup>
+                <!--</p:panelGrid>-->
+                <h2>#{bundle.UploadImages}</h2>
+                <h:panelGroup id="imagePreview">
+                    <p:carousel value="#{locationController.selected.images}"
+                                rendered="#{not empty locationController.selected.images}"
+                                var="image" itemStyle="width:80px; height: 80px" 
+                                numVisible="10">
+                        <p:graphicImage value="/showThumbnail?name=#{image.name}" alt="#{image.name}" title="#{image.name}"/>
+                    </p:carousel>
+                </h:panelGroup>
+                <p:fileUpload id="fileUpload" fileUploadListener="#{locationController.handleFileUpload}" style="width: 50%"
+                              multiple="true" auto="true" update=":growl, imagePreview" label="#{bundle.Choose}" 
+                              fileLimit="5" fileLimitMessage="ImageToBig" sizeLimit="1000000"/>
+                <br></br>
+                <h2>#{bundle.Offer}</h2>
+                <p:dataTable id="offers" value="#{locationController.selected.offers}" var="offer" style="width: 75%" emptyMessage="#{bundle.NoOffers}">
+                    <p:column headerText="#{bundle.AvailableUntil}">
+                        <h:outputText value="#{offer.offerDate}">
+                            <f:convertDateTime pattern="dd MMM YYYY"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{bundle.OfferText}">
+                        <h:outputText value="#{offer.content}"/>
+                    </p:column>
+                     <p:column headerText="#{bundle.Delete}"  width="8%">
+                        <div align="center"><p:commandButton type="submit"  update="@form" icon="ui-icon-trash" styleClass="cancelButton" alt="#{bundle.Delete}" ajax="false"
+                                                             actionListener="#{locationController.deleteOffer(offer, locationController.selected)}"/></div>
+                    </p:column>
+                </p:dataTable>
+                    <p:commandButton  id="newOfferButton"
+                                  value="Add Offer"
+                                  styleClass="btn ourButton"
+                                  process="@this"
+                                  update=":LocationForm:newOffer"
+                                  actionListener="#{locationController.prepareNewOffer}"/><br/><br/> 
+                <h:panelGroup id="newOffer">
+
+                    <h:panelGroup rendered="#{not empty locationController.newOffer}">
+                        <p:calendar id="offerDate" value="#{locationController.newOffer.offerDate}" pattern="dd.MM.yyyy" placeholder="#{bundle.AvailableUntil}"/><br/>
+                        <p:inputTextarea id="offerContent" value="#{locationController.newOffer.content}" cols="50" placeholder="#{bundle.Description}"/><br/><br/>
+                        <p:commandButton value="#{bundle.NewOffer}" 
+                                         update="newOffer,offers" process="newOffer"
+                                         styleClass="btn ourButton"
+                                         actionListener="#{locationController.addNewOffer()}"/>
+                        <p:commandButton value="Cancel"
+                                         styleClass="btn cancelButton"
+                                         process="@this"
+                                         actionListener="#{locationController.setNewOffer(null)}"
+                                         update="newOffer"/><br/><br/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                </p:panel>
+            <br/>
+                <h:panelGroup style="margin-left: 50px">
+                    <p:commandButton actionListener="#{locationController.update}" 
+                                     styleClass="btn ourButton"
+                                     value="#{bundle.Save}"  
+                                     process="display"
+                                     action="manageLocation"
+                                     ajax="false"/>
+                    <p:commandButton styleClass="btn cancelButton"
+                                     value="#{bundle.Cancel}"  
+                                     process="display"
+                                     actionListener="#{locationController.prepareCreate()}"
+                                     action="manageLocation"
+                                     ajax="false"/>
+                </h:panelGroup>            
+        </h:form>
+    </ui:define>
+</ui:composition>
